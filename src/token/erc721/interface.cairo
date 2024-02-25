@@ -33,7 +33,7 @@ trait IERC721<TState> {
 trait IERC721Metadata<TState> {
     fn name(self: @TState) -> felt252;
     fn symbol(self: @TState) -> felt252;
-    fn token_uri(self: @TState, token_id: u256) -> felt252;
+    fn token_uri(self: @TState, token_id: u256) -> Span<felt252>;
 }
 
 #[starknet::interface]
@@ -55,7 +55,7 @@ trait IERC721CamelOnly<TState> {
 
 #[starknet::interface]
 trait IERC721MetadataCamelOnly<TState> {
-    fn tokenURI(self: @TState, tokenId: u256) -> felt252;
+    fn tokenURI(self: @TState, tokenId: u256) -> Span<felt252>;
 }
 
 //
@@ -88,7 +88,7 @@ trait ERC721ABI<TState> {
     // IERC721Metadata
     fn name(self: @TState) -> felt252;
     fn symbol(self: @TState) -> felt252;
-    fn token_uri(self: @TState, token_id: u256) -> felt252;
+    fn token_uri(self: @TState, token_id: u256) -> Span<felt252>;
 
     // IERC721CamelOnly
     fn balanceOf(self: @TState, account: ContractAddress) -> u256;
