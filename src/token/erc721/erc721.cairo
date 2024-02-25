@@ -26,7 +26,7 @@ mod ERC721Component {
         ERC721_balances: LegacyMap<ContractAddress, u256>,
         ERC721_token_approvals: LegacyMap<u256, ContractAddress>,
         ERC721_operator_approvals: LegacyMap<(ContractAddress, ContractAddress), bool>,
-        ERC721_token_uri: LegacyMap<u256, felt252>,
+        ERC721_token_uri: LegacyMap<u256, Span<felt252>>,
     }
 
     #[event]
@@ -231,7 +231,7 @@ mod ERC721Component {
         /// Requirements:
         ///
         /// - `token_id` exists.
-        fn token_uri(self: @ComponentState<TContractState>, token_id: u256) -> felt252 {
+        fn token_uri(self: @ComponentState<TContractState>, token_id: u256) -> Span<felt252> {
             assert(self._exists(token_id), Errors::INVALID_TOKEN_ID);
             self.ERC721_token_uri.read(token_id)
         }
@@ -297,7 +297,7 @@ mod ERC721Component {
         +SRC5Component::HasComponent<TContractState>,
         +Drop<TContractState>
     > of interface::IERC721MetadataCamelOnly<ComponentState<TContractState>> {
-        fn tokenURI(self: @ComponentState<TContractState>, tokenId: u256) -> felt252 {
+        fn tokenURI(self: @ComponentState<TContractState>, tokenId: u256) -> Span<felt252> {
             self.token_uri(tokenId)
         }
     }
@@ -518,7 +518,7 @@ mod ERC721Component {
         ///
         /// - `token_id` exists.
         fn _set_token_uri(
-            ref self: ComponentState<TContractState>, token_id: u256, token_uri: felt252
+            ref self: ComponentState<TContractState>, token_id: u256, token_uri: Span<felt252>
         ) {
             assert(self._exists(token_id), Errors::INVALID_TOKEN_ID);
             self.ERC721_token_uri.write(token_id, token_uri)
