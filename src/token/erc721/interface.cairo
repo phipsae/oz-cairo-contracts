@@ -109,7 +109,7 @@ trait ERC721ABI<TState> {
     fn supportsInterface(self: @TState, interfaceId: felt252) -> bool;
 
     // IERC721MetadataCamelOnly
-    fn tokenURI(self: @TState, tokenId: u256) -> felt252;
+    fn tokenURI(self: @TState, tokenId: u256) -> Span<felt252>;
 }
 
 //
